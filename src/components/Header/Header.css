@@ -1,0 +1,18 @@
+.header {
+    display: flex;
+    flex-direction: column;
+    background-color: #282c34;
+    color: #61dafb;
+    min-height: 15vh;
+    padding: 20px 0 20px 0;
+  }
+  
+  .navLinks {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+  
+  .navLinks:hover {
+    text-decoration: underline;
+  }
