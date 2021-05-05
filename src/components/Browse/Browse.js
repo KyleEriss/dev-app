@@ -3,17 +3,17 @@ import './Browse.css';
 
 export default class Browse extends Component {
     state = {
-        results: []
+        people: []
     };
 
     handleSubmit = event => {
-        let api = 'https://randomuser.me/api/';
+        let api = 'https://randomuser.me/api/?results=9';
 
         fetch(api)
             .then(res => res.json())
             .then((data) => {
                 this.setState({
-                    results: data
+                    people: data.results
                 })
             })
     }
@@ -31,7 +31,14 @@ export default class Browse extends Component {
                 <br />
                 <br />
                 <br />
-                {JSON.stringify(this.state.results)}
+                <div className='images'>
+                    {this.state.people.map((person, idx) =>
+                        <div className='item'>
+                            <img src={person.picture.large} />
+                        </div>
+                    )}   
+                </div>
+                
             </div>
         )
     }
