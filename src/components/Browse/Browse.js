@@ -1,9 +1,12 @@
 import { Component } from 'react';
+import { Link } from 'react-router-dom';
 import './Browse.css';
 
 export default class Browse extends Component {
     state = {
-        people: []
+        people: [],
+        userInfo: [],
+        loading: ''
     };
 
     handleSubmit = event => {
@@ -13,9 +16,23 @@ export default class Browse extends Component {
             .then(res => res.json())
             .then((data) => {
                 this.setState({
-                    people: data.results
+                    people: data.results, loading: 'hello world'
                 })
             })
+    }
+
+    renderUserInfo = event => {
+        const idNumber = event.currentTarget.dataset.id;
+        let info = this.state.people.map(person =>
+            <ul>
+                <li>
+                    {person}
+                </li>
+            </ul>    
+        )
+        this.setState({
+            loading: info[idNumber]
+        })
     }
 
     render() {
@@ -34,11 +51,15 @@ export default class Browse extends Component {
                 <div className='images'>
                     {this.state.people.map((person, idx) =>
                         <div className='item'>
-                            <img src={person.picture.large} />
+                            <button onClick={this.renderUserInfo} data-id={idx}><img src={person.picture.large} /></button>
                         </div>
-                    )}   
+                    )}
                 </div>
-                
+                <br />
+                <br />
+                <br />
+                <br />
+                {JSON.stringify(this.state.loading)}
             </div>
         )
     }

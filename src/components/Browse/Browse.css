@@ -1,12 +1,14 @@
 .images {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
+    display: inline-grid;
+    grid-template-columns: auto auto auto;
 }
 
 .item {
-    flex: 0 32%;
-    height: 100px;
-    margin-bottom: 2%; /* (100-32*3)/2 */
+    margin: 0 2px 0 2px;
+    transition: transform .2s;
+}
+
+.item:hover {
+    transform: scale(1.5);
+    cursor: pointer;
 }
