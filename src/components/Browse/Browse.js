@@ -6,7 +6,11 @@ import './Browse.css';
 export default class Browse extends Component {
     state = {
         people: [],
-        info: ''
+        info: [],
+        selectedUser: [],
+        isLoading: true,
+        isLoadingButton: true,
+        selectedUserId: ''
     };
 
     handleSubmit = event => {
@@ -23,7 +27,10 @@ export default class Browse extends Component {
 
     renderUserInfo = event => {
         const idNumber = event.currentTarget.dataset.id;
-        let userData = this.state.people.map(person =>
+
+        console.log(idNumber)
+
+        let userInfo = this.state.people.map(person =>
             <ul>
                 <li>
                     {person.name.title} {person.name.first} {person.name.last}
@@ -34,7 +41,18 @@ export default class Browse extends Component {
         )
 
         this.setState({
-            info: userData[idNumber]
+            info: userInfo[idNumber],
+            selectedUserId: idNumber,
+            isLoadingButton: false
+        })
+
+        console.log(this.state.isLoadingButton)
+        console.log(this.state.info)
+    }
+
+    handleViewInfo = event => {
+        this.setState({
+            isLoading: false
         })
     }
 
@@ -47,6 +65,43 @@ export default class Browse extends Component {
                 <div className='images'>
                     {this.state.people.map((person, idx) =>
                         <div className='item'>
+                            <img src={person.picture.large} onClick={this.renderUserInfo} data-id={idx} />
+                        </div>
+                    )}
+                </div>
+                <br />
+                {this.state.info}
+                {this.state.isLoadingButton ? (
+                    <div></div>
+                ) : (
+
+                    <UserInfo people={this.state.people} selectedUserId={this.state.selectedUserId} />
+
+
+                    // <button onClick={this.handleViewInfo}>view more info</button>
+                )}
+
+
+                {/* {this.state.isLoading ? (
+                    <div></div>
+                ) : (
+
+                    <div>{this.state.selectedUser}</div>
+
+
+                    
+
+                )
+                } */}
+            </div>
+        )
+    }
+}
+
+
+
+{/* {this.state.people.map((person, idx) =>
+                        <div className='item'>
                             <Link to={{
                                 pathname: '/user-info', 
                                 state: { 
@@ -56,15 +111,51 @@ export default class Browse extends Component {
                                 <img src={person.picture.large} button onClick={this.renderUserInfo} data-id={idx} />
                             </Link>
                         </div>
-                    )}
-                </div>
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-            </div>
-        )
-    }
-}
+                    )} */}
+
+
+
+
+
+
+
+
+
+                    // let viewMoreInfo = this.state.people.map(person =>
+
+                    //     <ul>
+                    //         <li>
+                    //             <div className='item'>
+                    //                 <img src={person.picture.large} />
+                    //             </div>
+            
+                    //             <h3>Name</h3>
+                    //             {person.name.title}. {person.name.first} {person.name.last}
+                    //             <br />
+            
+                    //             <h3>Address</h3>
+                    //             {person.location.street.number} {person.location.street.name}
+                    //             <br />
+                    //             {person.location.city}, {person.location.state} {person.location.postcode}
+                    //             <br />
+                    //             {person.location.country}
+                    //             <br />
+            
+                    //             <h3>Contact and Login Credentials</h3>
+                    //                     email: {person.email}, username: {person.login.username}, password: {person.login.username}, uuid: {person.login.uuid}, home phone: {person.phone}, cell: {person.cell}
+                    //             <br />
+            
+                    //             <h3>DOB</h3>
+                    //                     date: {person.dob.date} age: {person.dob.age}
+                    //             <br />
+            
+                    //             <h3>Gender</h3>
+                    //             {person.gender}
+                    //             <br />
+            
+                    //             <h3>Nationality</h3>
+                    //             {person.nat}
+            
+                    //         </li>
+                    //     </ul>
+                    // )
