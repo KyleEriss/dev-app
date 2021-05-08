@@ -12,7 +12,6 @@ export default class Browse extends Component {
         people: [],
         info: [],
         selectedUser: [],
-        isLoading: true,
         isLoadingButton: true,
         isLoadingPopup: true,
         selectedUserId: '',
@@ -21,18 +20,21 @@ export default class Browse extends Component {
         isNewSearch: true
     };
 
+    //updates state with selected country
     handleSelectCountry = event => {
         this.setState({
             countrySelected: event.target.value
         })
     }
 
+    //updates state with selected gender
     handleSelectGender = event => {
         this.setState({
             gender: event.target.value
         })
     }
 
+    //runs fetch request for custom search and changes state to hide popup component
     handleCustomSearch = event => {
         console.log(this.state)
 
@@ -57,6 +59,7 @@ export default class Browse extends Component {
         })
     }
 
+    //runs fetch request for regular search
     handleSubmit = event => {
         let api = 'https://randomuser.me/api/?results=9';
 
@@ -69,6 +72,7 @@ export default class Browse extends Component {
             })
     }
 
+    //renders snippet of user info and changes state to reveal hidden UserInfo component
     renderUserInfo = event => {
         const idNumber = event.currentTarget.dataset.id;
 
@@ -94,6 +98,7 @@ export default class Browse extends Component {
         console.log(this.state.info)
     }
 
+    //changes state to reveal hidden popup component
     renderCustomSearch = event => {
         this.setState({
             isLoadingPopup: false
@@ -102,12 +107,7 @@ export default class Browse extends Component {
         console.log(this.state.isLoadingPopup)
     }
 
-    handleViewInfo = event => {
-        this.setState({
-            isLoading: false
-        })
-    }
-
+    //changes state to hide popup component
     closePopup = event => {
         this.setState({
             isLoadingPopup: true

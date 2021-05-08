@@ -10,6 +10,7 @@ export default class UserInfo extends Component {
         isLoading: true
     }
 
+    //renders user info in popup component and changes state to reveal popup component
     renderUserInfo = event => {
         const idNumber = this.props.selectedUserId;
 
@@ -59,6 +60,7 @@ export default class UserInfo extends Component {
         console.log(this.state.selectedUser)
     }
 
+    //changes state to hide popup component
     closePopup = event => {
         this.setState({
             isLoading: true
