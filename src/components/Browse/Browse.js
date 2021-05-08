@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import { Link } from 'react-router-dom';
 import UserInfo from './UserInfo/UserInfo'
+import Popup from './Popup/Popup';
 import './Browse.css';
 
 export default class Browse extends Component {
@@ -35,7 +36,7 @@ export default class Browse extends Component {
                 <li>
                     {person.name.title} {person.name.first} {person.name.last}
                     <br />
-                    {person.location.city} {person.location.state} {person.location.country}
+                    {person.location.city}, {person.location.state} {person.location.country}
                 </li>
             </ul>
         )

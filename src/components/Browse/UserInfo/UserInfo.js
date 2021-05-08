@@ -1,4 +1,6 @@
 import { Component } from 'react';
+import Popup from '../Popup/Popup';
+import { useState } from 'react';
 import './UserInfo.css';
 
 export default class UserInfo extends Component {
@@ -36,7 +38,7 @@ export default class UserInfo extends Component {
                     <br />
 
                     <h3>Contact and Login Credentials</h3>
-                            email: {person.email}, username: {person.login.username}, password: {person.login.username}, uuid: {person.login.uuid}, home phone: {person.phone}, cell: {person.cell}
+                            email: {person.email}, username: {person.login.username}, password: {person.login.username}, home phone: {person.phone}, cell: {person.cell}
                     <br />
 
                     <h3>DOB</h3>
@@ -55,24 +57,35 @@ export default class UserInfo extends Component {
         )
 
         this.setState({
-        selectedUser: viewMoreInfo[idNumber],
-        isLoading: false
-    })
+            selectedUser: viewMoreInfo[idNumber],
+            isLoading: false
+        })
 
-console.log(this.state.isLoading)
-console.log(this.state.selectedUser)
+        console.log(this.state.isLoading)
+        console.log(this.state.selectedUser)
     }
 
-render() {
+    closePopup = event => {
+        this.setState({
+            isLoading: true
+        })
+    }
 
-    return (
-        <div className='userBox'>
-            <br />
-            <button onClick={this.renderUserInfo}>view more info</button>
+    render() {
 
-            {this.state.selectedUser}
+        return (
+            <div>
+                <div className='userBox'>
+                    <br />
+                    <button onClick={this.renderUserInfo}>view more info</button>
+                    {this.state.isLoading ? (
+                        <div></div>
+                    ) : (
+                        <Popup trigger={true} close={this.closePopup}>{this.state.selectedUser}</Popup>
+                    )}
 
-            {/* {this.state.people.map((person, idx) =>
+
+                    {/* {this.state.people.map((person, idx) =>
                     <ul>
                         <li key={idx}>
                             <div className='item'>
@@ -111,7 +124,9 @@ render() {
 
                 )}*/}
 
-        </div>
-    )
-}
+                </div>
+            </div>
+
+        )
+    }
 }
