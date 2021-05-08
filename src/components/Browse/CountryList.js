@@ -1,4 +1,5 @@
 export const CountryList = [
+  { code: '', label: '' },
   { code: 'AU', label: 'Australia' },
   { code: 'BR', label: 'Brazil' },
   { code: 'CA', label: 'Canada' },

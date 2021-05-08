@@ -15,12 +15,43 @@ export default class Browse extends Component {
         isLoadingButton: true,
         isLoadingPopup: true,
         selectedUserId: '',
-        countrySelected: ''
+        countrySelected: '',
+        gender: ''
     };
 
-    handleSelect = event => {
+    handleSelectCountry = event => {
         this.setState({
             countrySelected: event.target.value
+        })
+    }
+
+    handleSelectGender = event => {
+        this.setState({
+            gender: event.target.value
+        })
+    }
+
+    handleCustomSearch = event => {
+        console.log(this.state)
+
+        let gender = this.state.gender;
+        let country = this.state.countrySelected;
+
+        let api = `https://randomuser.me/api/?results=9&nat=${country}&gender=${gender}`;
+
+        fetch(api)
+            .then(res => res.json())
+            .then((data) => {
+                this.setState({
+                    people: data.results
+                })
+            })
+
+        this.setState({
+            info: [],
+            countrySelected: '',
+            gender: '',
+            isLoadingPopup: true
         })
     }
 
@@ -89,24 +120,24 @@ export default class Browse extends Component {
                     <div></div>
                 ) : (
                     <Popup trigger={true} close={this.closePopup}>
-                        <form>
-                            <div className='selectGender'>
-                                Gender:
-                            <input type="radio" value="Male" name="gender" /> Male
-                            <input type="radio" value="Female" name="gender" /> Female
-                            </div>
 
-                            <div>
-                                Select country:
-                                <select value={this.state.sectCountry} onChange={this.handleSelect}>
-                                    {CountryList.map(country =>
-                                        <option value={country.code}>{country.label}</option>
-                                    )}
-                                </select>
-                            </div>
+                        <div className='selectGender'>
+                            Gender:
+                                <label><input type="radio" value="male" name="gender" onChange={this.handleSelectGender} /> Male</label>
+                            <label><input type="radio" value="female" name="gender" onChange={this.handleSelectGender} /> Female</label>
+                        </div>
 
-                            <button onClick={this.handleCustomSearch}>Custom Search</button>
-                        </form>
+                        <div className='selectCountry'>
+                            Select country:
+                                <select value={this.state.countrySelected} onChange={this.handleSelectCountry}>
+                                {CountryList.map(country =>
+                                    <option value={country.code}>{country.label}</option>
+                                )}
+                            </select>
+                        </div>
+
+                        <button onClick={this.handleCustomSearch}>Custom Search</button>
+                    
                     </Popup>
                 )}
 
