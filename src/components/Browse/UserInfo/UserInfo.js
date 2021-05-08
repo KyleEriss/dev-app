@@ -74,59 +74,15 @@ export default class UserInfo extends Component {
     render() {
 
         return (
-            <div>
-                <div className='userBox'>
-                    <br />
-                    <button onClick={this.renderUserInfo}>view more info</button>
-                    {this.state.isLoading ? (
-                        <div></div>
-                    ) : (
-                        <Popup trigger={true} close={this.closePopup}>{this.state.selectedUser}</Popup>
-                    )}
-
-
-                    {/* {this.state.people.map((person, idx) =>
-                    <ul>
-                        <li key={idx}>
-                            <div className='item'>
-                                <img src={person.picture.large} button data-id={idx} />
-                            </div>
-
-                            <h3>Name</h3>
-                            {person.name.title}. {person.name.first} {person.name.last}
-                            <br />
-
-                            <h3>Address</h3>
-                            {person.location.street.number} {person.location.street.name}
-                            <br />
-                            {person.location.city}, {person.location.state} {person.location.postcode}
-                            <br />
-                            {person.location.country}
-                            <br />
-
-                            <h3>Contact and Login Credentials</h3>
-                            email: {person.email}, username: {person.login.username}, password: {person.login.username}, uuid: {person.login.uuid}, home phone: {person.phone}, cell: {person.cell}
-                            <br />
-
-                            <h3>DOB</h3>
-                            date: {person.dob.date} age: {person.dob.age}
-                            <br />
-
-                            <h3>Gender</h3>
-                            {person.gender}
-                            <br />
-
-                            <h3>Nationality</h3>
-                            {person.nat} 
-
-                        </li>
-                    </ul>
-
-                )}*/}
-
-                </div>
+            <div className='userBox'>
+                <br />
+                <button onClick={this.renderUserInfo}>view more info</button>
+                {this.state.isLoading ? (
+                    <div></div>
+                ) : (
+                    <Popup trigger={true} close={this.closePopup}>{this.state.selectedUser}</Popup>
+                )}
             </div>
-
         )
     }
 }
