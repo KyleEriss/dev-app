@@ -2,4 +2,4 @@ This app fetches and displays data from the randomuser.me API. Users have the op
 
 To reveal more info about the profiles generated, simply click on the images, and select the 'view more info' button at the bottom.
 
-Here's a link to the live app: 
+Here's a link to the live app: https://kyleeriss.github.io/dev-app/
