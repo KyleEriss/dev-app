@@ -17,7 +17,8 @@ export default class Browse extends Component {
         isLoadingPopup: true,
         selectedUserId: '',
         countrySelected: '',
-        gender: ''
+        gender: '',
+        isNewSearch: true
     };
 
     handleSelectCountry = event => {
@@ -63,7 +64,7 @@ export default class Browse extends Component {
             .then(res => res.json())
             .then((data) => {
                 this.setState({
-                    people: data.results
+                    people: data.results, isNewSearch: false
                 })
             })
     }
@@ -93,7 +94,7 @@ export default class Browse extends Component {
         console.log(this.state.info)
     }
 
-    handleCustomSearch = event => {
+    renderCustomSearch = event => {
         this.setState({
             isLoadingPopup: false
         })
@@ -116,7 +117,17 @@ export default class Browse extends Component {
     render() {
         return (
             <div className='browse'>
-                <NewSearchButton search={this.handleSubmit} customSearch={this.handleCustomSearch}/>
+
+                {this.state.isNewSearch ? (
+                    <div className='newSearch'>
+                        <NewSearchButton search={this.handleSubmit} customSearch={this.renderCustomSearch} />
+                    </div>
+                ) : (
+                    <NewSearchButton search={this.handleSubmit} customSearch={this.renderCustomSearch} />
+                )}
+
+                
+                
                 {this.state.isLoadingPopup ? (
                     <div></div>
                 ) : (
@@ -138,7 +149,7 @@ export default class Browse extends Component {
                         </div>
 
                         <button onClick={this.handleCustomSearch}>Custom Search</button>
-                    
+
                     </Popup>
                 )}
 
@@ -153,11 +164,14 @@ export default class Browse extends Component {
                 </div>
                 <br />
                 {this.state.info}
-                {this.state.isLoadingButton ? (
-                    <div></div>
-                ) : (
-                    <UserInfo people={this.state.people} selectedUserId={this.state.selectedUserId} />
-                )}
+                <div className='userInfo'>
+                    {this.state.isLoadingButton ? (
+                        <div></div>
+                    ) : (
+                        <UserInfo people={this.state.people} selectedUserId={this.state.selectedUserId} />
+                    )}
+                </div>
+
             </div>
         )
     }

@@ -10,6 +10,10 @@
     align-items: center;
 }
 
+.popup:hover {
+    transform: none;
+}
+
 .popup-inner {
     position: relative;
     padding: 32px;
