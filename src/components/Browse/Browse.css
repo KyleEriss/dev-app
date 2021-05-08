@@ -2,6 +2,10 @@
     margin-top: 20px;
 }
 
+.newSearch {
+    margin-top: 300px;
+}
+
 .images {
     display: inline-grid;
     grid-template-columns: auto auto auto;
@@ -33,4 +37,21 @@ a:hover {
 
 select {
     margin-left: 10px;
+}
+
+.selectCountry {
+    margin-bottom: 30px;
+}
+
+.selectGender{
+    margin-bottom: 30px;;
+}
+
+input {
+    margin-left: 15px;
+}
+
+label:hover {
+    transform: scale(1.5);
+    cursor: pointer;
 }

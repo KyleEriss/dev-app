@@ -6,12 +6,11 @@ import './UserInfo.css';
 export default class UserInfo extends Component {
 
     state = {
-        // people: this.props.people,
-        // selectedUserId: this.props.selectedUserId,
         selectedUser: [],
         isLoading: true
     }
 
+    //renders user info in popup component and changes state to reveal popup component
     renderUserInfo = event => {
         const idNumber = this.props.selectedUserId;
 
@@ -21,9 +20,7 @@ export default class UserInfo extends Component {
 
             <ul>
                 <li>
-                    <div className='item'>
-                        <img src={person.picture.large} />
-                    </div>
+                    <img src={person.picture.large} />
 
                     <h3>Name</h3>
                     {person.name.title}. {person.name.first} {person.name.last}
@@ -32,17 +29,15 @@ export default class UserInfo extends Component {
                     <h3>Address</h3>
                     {person.location.street.number} {person.location.street.name}
                     <br />
-                    {person.location.city}, {person.location.state} {person.location.postcode}
-                    <br />
-                    {person.location.country}
+                    {person.location.city}, {person.location.state} {person.location.country}
                     <br />
 
                     <h3>Contact and Login Credentials</h3>
-                            email: {person.email}, username: {person.login.username}, password: {person.login.username}, home phone: {person.phone}, cell: {person.cell}
+                            email: {person.email}, username: {person.login.username}, password: {person.login.username}, phone: {person.cell}
                     <br />
 
                     <h3>DOB</h3>
-                            date: {person.dob.date} age: {person.dob.age}
+                            date: {person.dob.date}, age: {person.dob.age}
                     <br />
 
                     <h3>Gender</h3>
@@ -65,6 +60,7 @@ export default class UserInfo extends Component {
         console.log(this.state.selectedUser)
     }
 
+    //changes state to hide popup component
     closePopup = event => {
         this.setState({
             isLoading: true

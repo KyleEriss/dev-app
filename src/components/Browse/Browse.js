@@ -4,6 +4,7 @@ import UserInfo from './UserInfo/UserInfo';
 import { useState } from 'react';
 import Popup from './Popup/Popup';
 import { CountryNames, CountryList } from './CountryList';
+import NewSearchButton from '../NewSearchButton/NewSearchButton'
 import './Browse.css';
 
 export default class Browse extends Component {
@@ -11,26 +12,29 @@ export default class Browse extends Component {
         people: [],
         info: [],
         selectedUser: [],
-        isLoading: true,
         isLoadingButton: true,
         isLoadingPopup: true,
         selectedUserId: '',
         countrySelected: '',
-        gender: ''
+        gender: '',
+        isNewSearch: true
     };
 
+    //updates state with selected country
     handleSelectCountry = event => {
         this.setState({
             countrySelected: event.target.value
         })
     }
 
+    //updates state with selected gender
     handleSelectGender = event => {
         this.setState({
             gender: event.target.value
         })
     }
 
+    //runs fetch request for custom search and changes state to hide popup component
     handleCustomSearch = event => {
         console.log(this.state)
 
@@ -55,6 +59,7 @@ export default class Browse extends Component {
         })
     }
 
+    //runs fetch request for regular search
     handleSubmit = event => {
         let api = 'https://randomuser.me/api/?results=9';
 
@@ -62,11 +67,12 @@ export default class Browse extends Component {
             .then(res => res.json())
             .then((data) => {
                 this.setState({
-                    people: data.results
+                    people: data.results, isNewSearch: false
                 })
             })
     }
 
+    //renders snippet of user info and changes state to reveal hidden UserInfo component
     renderUserInfo = event => {
         const idNumber = event.currentTarget.dataset.id;
 
@@ -92,6 +98,7 @@ export default class Browse extends Component {
         console.log(this.state.info)
     }
 
+    //changes state to reveal hidden popup component
     renderCustomSearch = event => {
         this.setState({
             isLoadingPopup: false
@@ -100,12 +107,7 @@ export default class Browse extends Component {
         console.log(this.state.isLoadingPopup)
     }
 
-    handleViewInfo = event => {
-        this.setState({
-            isLoading: false
-        })
-    }
-
+    //changes state to hide popup component
     closePopup = event => {
         this.setState({
             isLoadingPopup: true
@@ -115,7 +117,17 @@ export default class Browse extends Component {
     render() {
         return (
             <div className='browse'>
-                <button onClick={this.handleSubmit}>New Search</button> or try <a onClick={this.renderCustomSearch}>Custom Search</a>
+
+                {this.state.isNewSearch ? (
+                    <div className='newSearch'>
+                        <NewSearchButton search={this.handleSubmit} customSearch={this.renderCustomSearch} />
+                    </div>
+                ) : (
+                    <NewSearchButton search={this.handleSubmit} customSearch={this.renderCustomSearch} />
+                )}
+
+                
+                
                 {this.state.isLoadingPopup ? (
                     <div></div>
                 ) : (
@@ -137,7 +149,7 @@ export default class Browse extends Component {
                         </div>
 
                         <button onClick={this.handleCustomSearch}>Custom Search</button>
-                    
+
                     </Popup>
                 )}
 
@@ -152,11 +164,14 @@ export default class Browse extends Component {
                 </div>
                 <br />
                 {this.state.info}
-                {this.state.isLoadingButton ? (
-                    <div></div>
-                ) : (
-                    <UserInfo people={this.state.people} selectedUserId={this.state.selectedUserId} />
-                )}
+                <div className='userInfo'>
+                    {this.state.isLoadingButton ? (
+                        <div></div>
+                    ) : (
+                        <UserInfo people={this.state.people} selectedUserId={this.state.selectedUserId} />
+                    )}
+                </div>
+
             </div>
         )
     }
