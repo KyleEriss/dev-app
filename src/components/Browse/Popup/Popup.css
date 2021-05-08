@@ -18,6 +18,14 @@
     background-color: white;
 }
 
+.close-btn {
+    text-align: center;
+    align-items: center;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+}
+
 .popup-inner .close-btn {
     position: absolute;
     top: 16px;

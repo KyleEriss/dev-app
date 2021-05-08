@@ -1,7 +1,9 @@
 import { Component } from 'react';
 import { Link } from 'react-router-dom';
-import UserInfo from './UserInfo/UserInfo'
+import UserInfo from './UserInfo/UserInfo';
+import { useState } from 'react';
 import Popup from './Popup/Popup';
+import { CountryNames, CountryList } from './CountryList';
 import './Browse.css';
 
 export default class Browse extends Component {
@@ -11,8 +13,47 @@ export default class Browse extends Component {
         selectedUser: [],
         isLoading: true,
         isLoadingButton: true,
-        selectedUserId: ''
+        isLoadingPopup: true,
+        selectedUserId: '',
+        countrySelected: '',
+        gender: ''
     };
+
+    handleSelectCountry = event => {
+        this.setState({
+            countrySelected: event.target.value
+        })
+    }
+
+    handleSelectGender = event => {
+        this.setState({
+            gender: event.target.value
+        })
+    }
+
+    handleCustomSearch = event => {
+        console.log(this.state)
+
+        let gender = this.state.gender;
+        let country = this.state.countrySelected;
+
+        let api = `https://randomuser.me/api/?results=9&nat=${country}&gender=${gender}`;
+
+        fetch(api)
+            .then(res => res.json())
+            .then((data) => {
+                this.setState({
+                    people: data.results
+                })
+            })
+
+        this.setState({
+            info: [],
+            countrySelected: '',
+            gender: '',
+            isLoadingPopup: true
+        })
+    }
 
     handleSubmit = event => {
         let api = 'https://randomuser.me/api/?results=9';
@@ -51,16 +92,55 @@ export default class Browse extends Component {
         console.log(this.state.info)
     }
 
+    renderCustomSearch = event => {
+        this.setState({
+            isLoadingPopup: false
+        })
+
+        console.log(this.state.isLoadingPopup)
+    }
+
     handleViewInfo = event => {
         this.setState({
             isLoading: false
         })
     }
 
+    closePopup = event => {
+        this.setState({
+            isLoadingPopup: true
+        })
+    }
+
     render() {
         return (
-            <div>
-                <button onClick={this.handleSubmit}>search</button>
+            <div className='browse'>
+                <button onClick={this.handleSubmit}>New Search</button> or try <a onClick={this.renderCustomSearch}>Custom Search</a>
+                {this.state.isLoadingPopup ? (
+                    <div></div>
+                ) : (
+                    <Popup trigger={true} close={this.closePopup}>
+
+                        <div className='selectGender'>
+                            Gender:
+                                <label><input type="radio" value="male" name="gender" onChange={this.handleSelectGender} /> Male</label>
+                            <label><input type="radio" value="female" name="gender" onChange={this.handleSelectGender} /> Female</label>
+                        </div>
+
+                        <div className='selectCountry'>
+                            Select country:
+                                <select value={this.state.countrySelected} onChange={this.handleSelectCountry}>
+                                {CountryList.map(country =>
+                                    <option value={country.code}>{country.label}</option>
+                                )}
+                            </select>
+                        </div>
+
+                        <button onClick={this.handleCustomSearch}>Custom Search</button>
+                    
+                    </Popup>
+                )}
+
                 <br />
                 <br />
                 <div className='images'>
@@ -75,88 +155,9 @@ export default class Browse extends Component {
                 {this.state.isLoadingButton ? (
                     <div></div>
                 ) : (
-
                     <UserInfo people={this.state.people} selectedUserId={this.state.selectedUserId} />
-
-
-                    // <button onClick={this.handleViewInfo}>view more info</button>
                 )}
-
-
-                {/* {this.state.isLoading ? (
-                    <div></div>
-                ) : (
-
-                    <div>{this.state.selectedUser}</div>
-
-
-                    
-
-                )
-                } */}
             </div>
         )
     }
 }
-
-
-
-{/* {this.state.people.map((person, idx) =>
-                        <div className='item'>
-                            <Link to={{
-                                pathname: '/user-info', 
-                                state: { 
-                                    userData: this.state.people 
-                                }
-                            }} >
-                                <img src={person.picture.large} button onClick={this.renderUserInfo} data-id={idx} />
-                            </Link>
-                        </div>
-                    )} */}
-
-
-
-
-
-
-
-
-
-                    // let viewMoreInfo = this.state.people.map(person =>
-
-                    //     <ul>
-                    //         <li>
-                    //             <div className='item'>
-                    //                 <img src={person.picture.large} />
-                    //             </div>
-            
-                    //             <h3>Name</h3>
-                    //             {person.name.title}. {person.name.first} {person.name.last}
-                    //             <br />
-            
-                    //             <h3>Address</h3>
-                    //             {person.location.street.number} {person.location.street.name}
-                    //             <br />
-                    //             {person.location.city}, {person.location.state} {person.location.postcode}
-                    //             <br />
-                    //             {person.location.country}
-                    //             <br />
-            
-                    //             <h3>Contact and Login Credentials</h3>
-                    //                     email: {person.email}, username: {person.login.username}, password: {person.login.username}, uuid: {person.login.uuid}, home phone: {person.phone}, cell: {person.cell}
-                    //             <br />
-            
-                    //             <h3>DOB</h3>
-                    //                     date: {person.dob.date} age: {person.dob.age}
-                    //             <br />
-            
-                    //             <h3>Gender</h3>
-                    //             {person.gender}
-                    //             <br />
-            
-                    //             <h3>Nationality</h3>
-                    //             {person.nat}
-            
-                    //         </li>
-                    //     </ul>
-                    // )
