@@ -1,11 +1,20 @@
 .App {
   text-align: center;
+  font-size: larger;
 }
 
 button {
-  background-color: black;
+  /* background-color: black;
   color: white;
-  border-radius: 8px;
+  border-radius: 8px; */
+  background-color: black;
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  margin: 4px 2px;
+  border-radius: 10px;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  letter-spacing: 1px;
 }
 
 button:hover {

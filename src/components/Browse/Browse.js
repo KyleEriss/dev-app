@@ -4,6 +4,7 @@ import UserInfo from './UserInfo/UserInfo';
 import { useState } from 'react';
 import Popup from './Popup/Popup';
 import { CountryNames, CountryList } from './CountryList';
+import NewSearchButton from '../NewSearchButton/NewSearchButton'
 import './Browse.css';
 
 export default class Browse extends Component {
@@ -92,7 +93,7 @@ export default class Browse extends Component {
         console.log(this.state.info)
     }
 
-    renderCustomSearch = event => {
+    handleCustomSearch = event => {
         this.setState({
             isLoadingPopup: false
         })
@@ -115,7 +116,7 @@ export default class Browse extends Component {
     render() {
         return (
             <div className='browse'>
-                <button onClick={this.handleSubmit}>New Search</button> or try <a onClick={this.renderCustomSearch}>Custom Search</a>
+                <NewSearchButton search={this.handleSubmit} customSearch={this.handleCustomSearch}/>
                 {this.state.isLoadingPopup ? (
                     <div></div>
                 ) : (
